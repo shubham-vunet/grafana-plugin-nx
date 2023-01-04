@@ -1,0 +1,35 @@
+{
+    "$schema": "https://raw.githubusercontent.com/grafana/grafana/jackw/webpack-federated-modules/docs/sources/developers/plugins/plugin.schema.json",
+    "type": "app",
+    "name": "App Basic",
+    "id": "my-org-app-basic",
+    "moduleLoader": "federated",
+    "info": {
+      "description": "This is a sample app using federated modules",
+      "author": {
+        "name": "My org"
+      },
+      "logos": {
+        "small": "img/logo.svg",
+        "large": "img/logo.svg"
+      },
+      "screenshots": [],
+      "version": "%VERSION%",
+      "updated": "%TODAY%"
+    },
+    "includes": [
+      {
+        "type": "page",
+        "name": "Default",
+        "path": "/a/%PLUGIN_ID%",
+        "role": "Admin",
+        "addToNav": true,
+        "defaultNav": true
+      }
+    ],
+    "dependencies": {
+      "grafanaDependency": ">=8.3.4",
+      "plugins": []
+    }
+  }
+  

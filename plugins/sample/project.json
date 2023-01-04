@@ -11,7 +11,6 @@
       "options": {
         "compiler": "babel",
         "outputPath": "dist/plugins/sample",
-        "index": "plugins/sample/src/index.html",
         "baseHref": "/",
         "main": "plugins/sample/src/main.tsx",
         "polyfills": "plugins/sample/src/polyfills.ts",

@@ -1,17 +1,17 @@
-import fs from 'fs';
-import path from 'path';
 import { SOURCE_DIR } from './constants';
+import { existsSync } from 'fs';
+import { resolve } from 'path';
 
 export function getPackageJson() {
-  return require(path.resolve(process.cwd(), 'package.json'));
+  return require(resolve(process.cwd(), 'package.json'));
 }
 
 export function getPluginId() {
-  const { id } = require(path.resolve(process.cwd(), `${SOURCE_DIR}/plugin.json`));
+  const { id } = require(resolve(process.cwd(), `plugins/sample/src/plugin.json`)); // TODO
 
   return id;
 }
 
 export function hasReadme() {
-  return fs.existsSync(path.resolve(process.cwd(), SOURCE_DIR, 'README.md'));
+  return existsSync(resolve(process.cwd(), SOURCE_DIR, 'README.md'));
 }

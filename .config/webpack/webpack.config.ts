@@ -6,14 +6,15 @@
 
 import { DIST_DIR, ENTRY_FILE, SOURCE_DIR } from './constants';
 import { getPackageJson, getPluginId, hasReadme } from './utils';
+import { join, resolve } from 'path';
 
 import { Configuration } from 'webpack';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+// import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import LiveReloadPlugin from 'webpack-livereload-plugin';
+
 // import ReplaceInFileWebpackPlugin from 'replace-in-file-webpack-plugin';
-import path from 'path';
 
 const config = (env: any): Configuration => ({
   cache: {
@@ -23,12 +24,12 @@ const config = (env: any): Configuration => ({
     },
   },
 
-  context: path.join(process.cwd(), SOURCE_DIR),
+  context: join(process.cwd(), SOURCE_DIR),
 
   devtool: env.production ? 'source-map' : 'eval-source-map',
 
   entry: {
-    module: path.resolve(process.cwd(), ENTRY_FILE),
+    module: resolve(process.cwd(), ENTRY_FILE),
   },
 
   externals: [
@@ -121,7 +122,7 @@ const config = (env: any): Configuration => ({
     clean: true,
     filename: '[name].js',
     libraryTarget: 'amd',
-    path: path.resolve(process.cwd(), DIST_DIR),
+    path: resolve(process.cwd(), DIST_DIR),
     publicPath: '/',
   },
 
@@ -164,13 +165,14 @@ const config = (env: any): Configuration => ({
     //     ],
     //   },
     // ]),
-    new ForkTsCheckerWebpackPlugin({
-      async: Boolean(env.development),
-      issue: {
-        include: [{ file: '**/*.{ts,tsx}' }],
-      },
-      typescript: { configFile: path.join(process.cwd(), 'tsconfig.json') },
-    }),
+    // TODO
+    // new ForkTsCheckerWebpackPlugin({
+    //   async: Boolean(env.development),
+    //   issue: {
+    //     include: [{ file: '**/*.{ts,tsx}' }],
+    //   },
+    //   typescript: { configFile: join(process.cwd(), 'tsconfig.json') },
+    // }),
     new ESLintPlugin({
       extensions: ['.ts', '.tsx'],
       lintDirtyModulesOnly: Boolean(env.development), // don't lint on start, only lint changed files
