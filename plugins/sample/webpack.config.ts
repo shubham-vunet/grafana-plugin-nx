@@ -22,7 +22,7 @@ const sharedDeps = {
   '@grafana/ui': { singleton: true, requiredVersion: false },
 };
 
-const config = (env) =>
+const config = (env: Configuration) =>
   mergeWithCustomize({
     customizeArray: customizeArray({
       plugins: 'prepend',

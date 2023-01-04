@@ -4,18 +4,18 @@
  * In order to extend the configuration follow the steps in .config/README.md
  */
 
+import { DIST_DIR, ENTRY_FILE, SOURCE_DIR } from './constants';
+import { getPackageJson, getPluginId, hasReadme } from './utils';
+
+import { Configuration } from 'webpack';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import LiveReloadPlugin from 'webpack-livereload-plugin';
+// import ReplaceInFileWebpackPlugin from 'replace-in-file-webpack-plugin';
 import path from 'path';
-import ReplaceInFileWebpackPlugin from 'replace-in-file-webpack-plugin';
-import { Configuration } from 'webpack';
 
-import { getPackageJson, getPluginId, hasReadme } from './utils';
-import { SOURCE_DIR, DIST_DIR, ENTRY_FILE } from './constants';
-
-const config = (env): Configuration => ({
+const config = (env: any): Configuration => ({
   cache: {
     type: 'filesystem',
     buildDependencies: {
@@ -57,11 +57,11 @@ const config = (env): Configuration => ({
     // Mark legacy SDK imports as external if their name starts with the "grafana/" prefix
     ({ request }, callback) => {
       const prefix = 'grafana/';
-      const hasPrefix = (request) => request.indexOf(prefix) === 0;
-      const stripPrefix = (request) => request.substr(prefix.length);
+      const hasPrefix = (request: string) => request.indexOf(prefix) === 0;
+      const stripPrefix = (request: string) => request.substr(prefix.length);
 
-      if (hasPrefix(request)) {
-        return callback(undefined, stripPrefix(request));
+      if (hasPrefix(request!)) {
+        return callback(undefined, stripPrefix(request!));
       }
 
       callback();
@@ -144,26 +144,26 @@ const config = (env): Configuration => ({
       ],
     }),
     // Replace certain template-variables in the README and plugin.json
-    new ReplaceInFileWebpackPlugin([
-      {
-        dir: DIST_DIR,
-        files: ['plugin.json', 'README.md'],
-        rules: [
-          {
-            search: /\%VERSION\%/g,
-            replace: getPackageJson().version,
-          },
-          {
-            search: /\%TODAY\%/g,
-            replace: new Date().toISOString().substring(0, 10),
-          },
-          {
-            search: /\%PLUGIN_ID\%/g,
-            replace: getPluginId(),
-          },
-        ],
-      },
-    ]),
+    // new ReplaceInFileWebpackPlugin([
+    //   {
+    //     dir: DIST_DIR,
+    //     files: ['plugin.json', 'README.md'],
+    //     rules: [
+    //       {
+    //         search: /\%VERSION\%/g,
+    //         replace: getPackageJson().version,
+    //       },
+    //       {
+    //         search: /\%TODAY\%/g,
+    //         replace: new Date().toISOString().substring(0, 10),
+    //       },
+    //       {
+    //         search: /\%PLUGIN_ID\%/g,
+    //         replace: getPluginId(),
+    //       },
+    //     ],
+    //   },
+    // ]),
     new ForkTsCheckerWebpackPlugin({
       async: Boolean(env.development),
       issue: {

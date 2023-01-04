@@ -35,3 +35,5 @@ declare module '*.woff2';
 declare module '*.eot';
 declare module '*.ttf';
 declare module '*.otf';
+
+// declare module 'replace-in-file-webpack-plugin';
